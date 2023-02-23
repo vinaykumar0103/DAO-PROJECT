@@ -33,7 +33,7 @@ const dayRemaining=(days) =>{
   days=moment(days)
   days=days.diff((todaysdate,"days"))
   return days==1 ? "1 day":days+"days"
-};
+}
 
 export{
   truncate,
