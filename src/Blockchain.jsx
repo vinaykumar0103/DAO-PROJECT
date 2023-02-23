@@ -47,14 +47,8 @@ const getEthereumContract= async () =>{
 
     if(connectedAccount){
         const web3= window.web3
-        const networkId=await web3.eth.net.getId()
-        const networkData=await abi.networks[networkId]
-        if(networkData){
-            const contract= new web3.eth.Contract(abi.abi,networkData.address)
-            return contract
-        }else{
-            return null
-        }
+            const contract= new web3.eth.Contract(abi.abi,"0x5FbDB2315678afecb367f032d93F642f64180aa3");
+            return contract     
     }else{
         return getGlobalState('contract')
     }
@@ -65,11 +59,11 @@ const performContribute=async (amount) =>{
         amount = window.web3.utils.toWei(amount.toString(),'ether')
         const contract= await getEthereumContract()
         const account=getGlobalState('connectedAccount')
-        await contract.methods.contribute().sender({from:account,value: amount})
+        await contract.methods.contribute().send({from:account,value: amount})
         window.location.reload()
     }catch(error){
-        reportError(error)
-        return error
+        reportError(error);
+        
     }
 }
 
